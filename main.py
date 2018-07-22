@@ -16,19 +16,14 @@ def main():
     init()
 
     # get the dataset
-    print colored("Where is the dataset?", 'cyan', attrs=['bold'])
-    print colored('warning: files might get deleted if they are incompatible with utf8', 'yellow')
-    ans = sys.stdin.readline()
+    mypath = 'dataset/'
     # remove any newlines or spaces at the end of the input
-    path = ans.strip('\n')
+    path = mypath.strip('\n')
     if path.endswith(' '):
         path = path.rstrip(' ')
 
     # preprocess data into two folders instead of 6
-    print colored("Reorganizing folders, into two classes", 'cyan', attrs=['bold'])
     reorganize_dataset(path)
-
-    print '\n\n'
 
     # do the main test
     main_test(path)
@@ -67,8 +62,22 @@ def reorganize_dataset(path):
             os.rmdir(os.path.join(path, like))
 
 
+
+def remove_incompatible_files(dir_path):
+    # find incompatible files
+    print colored('Finding files incompatible with utf8: ', 'green', attrs=['bold'])
+    incompatible_files = util.find_incompatible_files(dir_path)
+    print colored(len(incompatible_files), 'yellow'), 'files found'
+
+    # delete them
+    if(len(incompatible_files) > 0):
+        print colored('Deleting incompatible files', 'red', attrs=['bold'])
+        util.delete_incompatible_files(incompatible_files)
+
+
+
 def main_test(path=None):
-    dir_path = path or 'dataset'
+    dir_path = path
 
     remove_incompatible_files(dir_path)
 
@@ -78,7 +87,7 @@ def main_test(path=None):
     print colored('Loading files into memory', 'green', attrs=['bold'])
     files = sklearn.datasets.load_files(dir_path)
 
-    # refine all emails
+    # refine all refine_all_emails
     print colored('Refining all files', 'green', attrs=['bold'])
     util.refine_all_emails(files.data)
 
@@ -92,31 +101,42 @@ def main_test(path=None):
     X = tf_transformer.transform(word_counts)
 
     print '\n\n'
+    
+    # defining test_size
+    test_size = [0.2]
 
     # create classifier
+    print colored('TFIDF with Naive Bayes', 'red', attrs=['bold'])
     clf = sklearn.naive_bayes.MultinomialNB()
+
+    # print '\n'
+    for test in test_size:
+        test_classifier(X, files.target, clf, test, y_names=files.target_names, confusion=False)
+
+
+    print '\n\n'
+
+    print colored('TFIDF with Support Vector Machine', 'red', attrs=['bold'])
     clf = sklearn.svm.LinearSVC()
+
+    # print '\n'
+    for test in test_size:
+        test_classifier(X, files.target, clf, test, y_names=files.target_names, confusion=False)
+
+
+    print '\n\n'
+    
+    print colored('TFIDF with K Neighbours', 'red', attrs=['bold'])
     n_neighbors = 11
     weights = 'uniform'
     weights = 'distance'
     clf = sklearn.neighbors.KNeighborsClassifier(n_neighbors, weights=weights)
 
     # test the classifier
-    print '\n\n'
-    print colored('Testing classifier with train-test split', 'magenta', attrs=['bold'])
-    test_classifier(X, files.target, clf, test_size=0.6, y_names=files.target_names, confusion=False)
+    # print '\n'
+    for test in test_size:
+        test_classifier(X, files.target, clf, test, y_names=files.target_names, confusion=False)
 
-
-def remove_incompatible_files(dir_path):
-    # find incompatible files
-    print colored('Finding files incompatible with utf8: ', 'green', attrs=['bold'])
-    incompatible_files = util.find_incompatible_files(dir_path)
-    print colored(len(incompatible_files), 'yellow'), 'files found'
-
-    # delete them
-    if(len(incompatible_files) > 0):
-        print colored('Deleting incompatible files', 'red', attrs=['bold'])
-        util.delete_incompatible_files(incompatible_files)
 
 
 def test_classifier(X, y, clf, test_size, y_names=None, confusion=False):

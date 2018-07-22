@@ -18,8 +18,8 @@ Some of the supplied text files had incompatibility with UTF-8. So, they are del
 
 * python modules:
 
-  * scikit-learn (v 0.11)
-  * scipy (v 0.10.1)
+  * scikit-learn
+  * scipy
   * colorama
   * termcolor
 

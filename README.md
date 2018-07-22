@@ -19,7 +19,6 @@ Some of the supplied text files had incompatibility with UTF-8. So, they are del
 * python modules:
 
   * scikit-learn
-  * scipy
   * colorama
   * termcolor
 

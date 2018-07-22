@@ -126,7 +126,7 @@ def main_test(path=None):
 
     print '\n\n'
     
-    print colored('TFIDF with K Neighbours', 'red', attrs=['bold'])
+    print colored('TFIDF with K-Nearest Neighbours', 'red', attrs=['bold'])
     n_neighbors = 11
     weights = 'uniform'
     weights = 'distance'

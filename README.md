@@ -54,7 +54,7 @@ __Results__:
 
 avg / total       0.97      0.97      0.97      1104
 ```
-#### TFIDF with K Neighbours
+#### TFIDF with K-Nearest Neighbours
 __Results__:
 
 ```

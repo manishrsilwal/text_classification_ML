@@ -103,7 +103,7 @@ def main_test(path=None):
     print '\n\n'
     
     # defining test_size
-    test_size = [0.2]
+    test_size = [0.2, 0.4, 0.8]
 
     # create classifier
     print colored('TFIDF with Naive Bayes', 'red', attrs=['bold'])

@@ -30,8 +30,8 @@ def main():
 
 
 def reorganize_dataset(path):
-    likes = ['rec.sport.hockey', 'sci.crypt', 'sci.electronics']
-    dislikes = ['sci.space', 'rec.motorcycles', 'misc.forsale']
+    likes = ['comp.graphics', 'sci.space', 'talk.religion.misc']
+    dislikes = ['comp.windows.x', 'rec.motorcycles', 'misc.forsale']
 
     folders = glob.glob(os.path.join(path, '*'))
     if len(folders) == 2:
@@ -103,7 +103,7 @@ def main_test(path=None):
     print '\n\n'
     
     # defining test_size
-    test_size = [0.2, 0.4, 0.8]
+    test_size = [0.2]
 
     # create classifier
     print colored('TFIDF with Naive Bayes', 'red', attrs=['bold'])

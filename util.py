@@ -6,11 +6,10 @@ import sklearn.naive_bayes
 import sklearn.cross_validation
 import sklearn.svm
 import sklearn.neighbors
-
+from colorama import init
+from termcolor import colored
 
 def main():
-    from colorama import init
-    from termcolor import colored
     init()
 
     test_main()

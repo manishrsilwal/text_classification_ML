@@ -7,7 +7,6 @@ import sklearn.naive_bayes
 import sklearn.neighbors
 from colorama import init
 from termcolor import colored
-import sys
 import os
 import glob
 
